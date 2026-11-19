@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <cstring>
 
+// i18n system for ZeldaWWHDRecomp UI localization
 // Language translation tables
 #include "translations/en_US.h"
 #include "translations/zh_CN.h"
