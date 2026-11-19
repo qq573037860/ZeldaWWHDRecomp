@@ -222,7 +222,7 @@ endif()
 # GX2 sources are compiled into the executable (not a static library) so their
 # strong HLE definitions replace the generated weak import stubs.
 file(GLOB RUNTIME_SOURCES CONFIGURE_DEPENDS runtime/src/*.cpp runtime/src/*.c runtime/src/hle/*.cpp runtime/src/mods/*.cpp runtime/src/motion/*.cpp
-                                            runtime/src/overlay/*.cpp runtime/src/editor/*.cpp)
+                                            runtime/src/overlay/*.cpp runtime/src/editor/*.cpp runtime/src/i18n/*.cpp)
 list(REMOVE_ITEM RUNTIME_SOURCES ${CMAKE_SOURCE_DIR}/runtime/src/mods/player_model_packages.cpp)  # (in wwhd_gcmodel)
 # the world editor's MCP interface for Claude and other tool clients (runtime/src/editor/mcp.h): only in the
 # --editor launch mode of desktop builds, off until turned on in Settings -> Editor
