@@ -1428,7 +1428,7 @@ add_test(NAME mod_guest_prepare COMMAND mod_package_test --guest-prepare)
 # issue #173: platform extensions of the settings overlay (overlay/extensions.h) and the overlay's text
 # fields through a platform keyboard (text_entry::field)
 add_executable(overlay_extensions_test runtime/tools/overlay_extensions_test.cpp runtime/src/overlay/extensions.cpp
-  runtime/src/overlay/text_field.cpp)
+  runtime/src/overlay/text_field.cpp runtime/src/i18n/i18n.cpp)
 target_include_directories(overlay_extensions_test PRIVATE runtime/src)
 target_compile_options(overlay_extensions_test PRIVATE -UNDEBUG)
 target_link_libraries(overlay_extensions_test PRIVATE imgui)
