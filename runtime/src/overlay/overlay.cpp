@@ -335,12 +335,16 @@ void setup_fonts() {
     if (const ext::FontLoader& load = ext::font_loader(); load && load(io)) return;  // the platform's (extensions.h)
     static const char* const candidates[] = {
 #if defined(__APPLE__)
+        "/System/Library/Fonts/PingFang.ttc",  // Chinese font for macOS
         "/System/Library/Fonts/Supplemental/Arial Unicode.ttf",
         "/System/Library/Fonts/Supplemental/Arial.ttf",
 #elif defined(_WIN32)
+        "C:/Windows/Fonts/msyh.ttc",  // Microsoft YaHei (Chinese)
         "C:/Windows/Fonts/segoeui.ttf",
         "C:/Windows/Fonts/arial.ttf",
 #else
+        "/system/fonts/NotoSansCJK-Regular.ttc",  // Android Chinese font
+        "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc",  // Linux Chinese
         "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
         "/usr/share/fonts/TTF/DejaVuSans.ttf",
         "/usr/share/fonts/dejavu-sans-fonts/DejaVuSans.ttf",
@@ -363,6 +367,14 @@ void setup_fonts() {
 }
 
 void init_context() {
+    // Initialize i18n with system language (default to Chinese for Chinese systems)
+    const char* sys_lang = getenv("LANG");
+    if (sys_lang && strncmp(sys_lang, "zh", 2) == 0) {
+        i18n_init("zh_CN");
+    } else {
+        i18n_init("en_US");
+    }
+
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
@@ -3244,6 +3256,21 @@ void tab_about() {
         warn("%s is saved. Restart the game to apply it: the game reads the console language only when it starts.",
              game_lang::name(U.language));
     }
+
+    // UI Language selection
+    heading(tr("Language"));
+    static int ui_language = strcmp(i18n_get_language(), "zh_CN") == 0 ? 1 : 0;
+    if (ImGui::RadioButton("English", ui_language == 0)) {
+        ui_language = 0;
+        i18n_set_language("en_US");
+    }
+    ImGui::SameLine();
+    if (ImGui::RadioButton("简体中文", ui_language == 1)) {
+        ui_language = 1;
+        i18n_set_language("zh_CN");
+    }
+    note("UI language change takes effect immediately.");
+
     heading(tr("About"));
     ImGui::Text("The Legend of Zelda: The Wind Waker HD - native port (%s host, %s renderer)", hostui::name(),
                 render::api_name(render::active()));
