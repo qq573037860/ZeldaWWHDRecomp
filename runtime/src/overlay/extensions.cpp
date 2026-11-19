@@ -2,6 +2,7 @@
 // thread at start-up, sealed by the overlay's first frame or the first controller shortcut poll, read
 // only afterwards.
 #include "extensions.h"
+#include "../i18n/i18n.h"
 
 #include <algorithm>
 #include <atomic>
@@ -36,7 +37,7 @@ void make_tabs() {
     for (int i = 0; i < kBuiltinCount; i++) {
         ShownTab t;
         t.id = kBuiltinTabs[i].id;
-        t.name = kBuiltinTabs[i].name;
+        t.name = tr(kBuiltinTabs[i].name);  // Use translated name
         t.builtin = i;
         g_tabs.push_back(std::move(t));
     }

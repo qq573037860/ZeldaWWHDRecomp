@@ -19,6 +19,7 @@
 
 #include "release_gate.h"  // PadValues
 #include "text_entry.h"
+#include "../i18n/i18n.h"
 
 struct ImGuiIO;
 
